@@ -21,6 +21,5 @@ git clone https://github.com/ftanrisevdi/swe573.git
 ## See the 'Hello World!' on your terminal
 
 ```bash
-cd src
 python3 src/hello.py
 ```
