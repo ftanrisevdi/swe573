@@ -17,9 +17,3 @@ Open the terminal, end up to your desired folder and execute the task below. (If
 ```bash
 git clone https://github.com/ftanrisevdi/swe573.git
 ```
-
-## See the 'Hello World!' on your terminal
-
-```bash
-python3 src/hello.py
-```

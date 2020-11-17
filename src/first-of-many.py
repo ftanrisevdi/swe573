@@ -1,3 +1,6 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
 import tweepy
 import os
 from os.path import join, dirname
@@ -12,6 +15,42 @@ auth.set_access_token(os.environ.get("PPP"),
 
 api = tweepy.API(auth)
 
-public_tweets = api.home_timeline()
+public_tweets = api.search('starwars')
+print(public_tweets)
 for tweet in public_tweets:
+    print('--------------')
     print(tweet.text)
+
+
+df = pd.read_json(public_tweets, encoding="latin-1")
+
+comment_words = ''
+stopwords = set(STOPWORDS)
+
+# iterate through the csv file
+for val in df.CONTENT:
+
+    # typecaste each val to string
+    val = str(val)
+
+    # split the value
+    tokens = val.split()
+
+    # Converts each token into lowercase
+    for i in range(len(tokens)):
+        tokens[i] = tokens[i].lower()
+
+    comment_words += " ".join(tokens)+" "
+
+wordcloud = WordCloud(width=800, height=800,
+                      background_color='white',
+                      stopwords=stopwords,
+                      min_font_size=10).generate(comment_words)
+
+# plot the WordCloud image
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad=0)
+
+plt.show()
