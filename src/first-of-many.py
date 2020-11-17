@@ -16,13 +16,12 @@ auth.set_access_token(os.environ.get("PPP"),
 api = tweepy.API(auth)
 
 public_tweets = api.search('starwars')
-print(public_tweets)
+x = []
 for tweet in public_tweets:
-    print('--------------')
-    print(tweet.text)
+    x.append({'twits': tweet.text})
 
-
-df = pd.read_json(public_tweets, encoding="latin-1")
+print(x)
+df = pd.read_json(x, encoding="latin-1")
 
 comment_words = ''
 stopwords = set(STOPWORDS)
