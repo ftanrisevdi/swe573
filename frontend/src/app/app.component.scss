@@ -16,3 +16,23 @@ input[type="password"] {
 button {
   padding: 4px;
 }
+.container {
+  display: flex;
+}
+.half {
+  width: 50%;
+  padding: 32px;
+}
+.form-group {
+  padding: 8px 0;
+}
+.invalid {
+  border: 1px solid red;
+}
+.invalid-feedback {
+  font-size: 11px;
+  color: red;
+}
+.valid-feedback {
+  color: green;
+}
