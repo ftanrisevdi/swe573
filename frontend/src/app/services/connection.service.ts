@@ -15,4 +15,8 @@ export class ConnectionService {
   signin(user: User, options?: any): Observable<any> {
     return this.http.post(`${environment.api}signin`, user);
   }
+
+  search(): Observable<any> {
+    return this.http.get(`${environment.api}search`);
+  }
 }

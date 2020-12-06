@@ -1,0 +1,4 @@
+<button type="button" (click)="search()">Get Twits</button>
+<ol *ngIf="(twits$ | async) as twits ">
+  <li *ngFor="let twit of twits.data">{{twit}}</li>
+</ol>
