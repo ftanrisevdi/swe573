@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
-import { ConnectionService } from 'src/app/services/connection.service';
+import { ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +12,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule.forChild(routes)],
 })
 export class DashboardModule {}

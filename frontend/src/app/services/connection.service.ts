@@ -16,7 +16,7 @@ export class ConnectionService {
     return this.http.post(`${environment.api}signin`, user);
   }
 
-  search(): Observable<any> {
-    return this.http.get(`${environment.api}search`);
+  search(key: string): Observable<any> {
+    return this.http.get(`${environment.api}search?key=${key}`);
   }
 }

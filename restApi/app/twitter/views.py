@@ -14,9 +14,10 @@ api = tweepy.API(auth)
 class SearchResultView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
-    def get(self,request):
+    def get(self,request ):
+        key = request.query_params.get('key')
         tweets = tweepy.Cursor(api.search,
-              q="covid",
+              q=key,
               lang="en").items(100)
         tweets_arr = []
         for tweet in tweets:

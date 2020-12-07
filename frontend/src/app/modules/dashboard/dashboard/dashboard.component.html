@@ -1,4 +1,13 @@
-<button type="button" (click)="search()">Get Twits</button>
+<form [formGroup]="searchForm" (ngSubmit)="submit()">
+  <input placeholder="key" type="text" formControlName="key" class="form-control"
+    [ngClass]="{ 'invalid': submitted && f.key.errors }" />
+  <p *ngIf="submitted && f.key.errors" class="invalid-feedback">
+    <ng-container *ngIf="f.key.errors.required">Key is required</ng-container>
+    <ng-container *ngIf="f.key.errors.minlength">Key must be at least 2 characters</ng-container>
+  </p>
+  <button type="submit">Get Twits</button>
+</form>
+
 <ol *ngIf="(twits$ | async) as twits ">
   <li *ngFor="let twit of twits.data">{{twit}}</li>
 </ol>
