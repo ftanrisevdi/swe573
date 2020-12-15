@@ -12,8 +12,8 @@ auth.set_access_token(config('Key'), config('Secret'))
 api = tweepy.API(auth)
 
 class SearchResultView(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
+    # permission_classes = (IsAuthenticated,)
+   # authentication_class = JSONWebTokenAuthentication
     def get(self,request ):
         key = request.query_params.get('key')
         tweets = tweepy.Cursor(api.search,

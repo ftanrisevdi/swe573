@@ -53,6 +53,6 @@ export class LoginComponent implements OnInit {
     );
   }
   setCookie(token: string) {
-    this.cookieService.set('UserApiToken', token);
+    this.cookieService.set('UserApiToken', `Bearer ${token}`);
   }
 }
