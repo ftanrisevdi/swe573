@@ -7,7 +7,7 @@ class TwitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Twit
-        fields = ['id', 'search_key_word', 'created','twits', 'user']
+        fields = ['id', 'search_key_word', 'created','twits', 'user', 'clean_twits']
 
 
     def create(self, validated_data):

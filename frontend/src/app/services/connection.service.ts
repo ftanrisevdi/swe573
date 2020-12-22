@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ConnectionService {
+  activeResults;
   constructor(private http: HttpClient) {}
 
   signup(newUser: User, options?: any): Observable<any> {

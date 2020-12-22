@@ -6,6 +6,7 @@ class Twit(models.Model):
     
     search_key_word = models.CharField(max_length=100) 
     created = models.DateTimeField()
+    clean_twits = models.CharField(max_length=1000000, default='')
     twits = models.CharField(max_length=1000000)
 
     def __str__(self):

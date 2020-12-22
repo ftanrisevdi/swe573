@@ -7,7 +7,13 @@
   </p>
   <button type="submit">Get Twits</button>
 </form>
+<div #cloud class="cloud"></div>
+<div id="barChart" *ngIf="barChartData.length > 0">
+  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+    [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+  </canvas>
+</div>
 
-<ol *ngIf="(twits$ | async) as twits ">
-  <li *ngFor="let twit of twits.data">{{twit}}</li>
+<ol *ngIf="(result$ | async) as result ">
+  <li *ngFor="let twit of result.data.twits">{{twit}}</li>
 </ol>
