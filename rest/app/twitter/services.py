@@ -10,7 +10,7 @@ def get_stopwords():
 def word_count(str):
   d = dict()   
   arr = []
-  print(str)
+  # print(str)
   words = str.split(" ") 
   for word in words: 
       # Check if the word is already in dictionary 

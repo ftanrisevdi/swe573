@@ -51,7 +51,8 @@ class SearchResultView(RetrieveAPIView):
         result = {
             'search_key_word':key,
             'twits':json_str,
-            'created':datetime.datetime.now()
+            'created':datetime.datetime.now(),
+            'cleanTwits': clean_tweets,
         }
         serializer = self.serializer_class(data=result)
         serializer.is_valid(raise_exception=True)

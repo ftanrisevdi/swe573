@@ -85,9 +85,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.cloud.nativeElement.insertAdjacentHTML(
       'beforeend',
       `<span class="cloud__text" style="font-size:${row[1] + 10}px;top:${
-        Math.floor(Math.random() * 300) + 1
+        Math.floor(Math.random() * 400) + 1
       }px;left:${
-        Math.floor(Math.random() * 500) + 1
+        Math.floor(Math.random() * 1200) + 1
       }px; color:${this.getRandomColor()}; z-index:${row[1]}">${row[0]}</span>`
     );
   }
