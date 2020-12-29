@@ -33,15 +33,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   barChartType: ChartType = 'bar';
   barChartPlugins = [];
   barChartData = [];
+  languages = ['en', 'tr'];
 
   constructor(
     private formBuilder: FormBuilder,
     private connectionService: ConnectionService
   ) {}
 
+  resetBarChart() {}
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
       key: ['', [Validators.required, Validators.minLength(2)]],
+      language: ['en', [Validators.required]],
     });
   }
   get f() {
@@ -53,14 +56,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       return;
     }
     this.result$ = this.connectionService
-      .search(this.searchForm.get('key').value)
+      .search({
+        key: this.searchForm.get('key').value,
+        language: this.searchForm.get('language').value,
+      })
       .pipe(share());
     this.result$.subscribe((result) => {
-      // this.connectionService.activeResults = {
-      //   twits: result.data.twits,
-      //   details: JSON.parse(result.data.rawData),
-      //   wordCount: result.data.wordCount,
-      // };
       this.cloud.nativeElement.innerHTML = '';
       for (let i = 0; i < result.data.wordCount.length; i++) {
         this.wordCloud(result.data.wordCount[i]);
@@ -84,11 +85,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   wordCloud(row) {
     this.cloud.nativeElement.insertAdjacentHTML(
       'beforeend',
-      `<span class="cloud__text" style="font-size:${row[1] + 10}px;top:${
+      `<span class="cloud__text" style="font-size:${(row[1] + 3) * 2}px;top:${
         Math.floor(Math.random() * 400) + 1
-      }px;left:${
-        Math.floor(Math.random() * 1200) + 1
-      }px; color:${this.getRandomColor()}; z-index:${row[1]}">${row[0]}</span>`
+      }px;left:${Math.floor(Math.random() * 1200) + 1}px
+      ; color:${this.getRandomColor()}; z-index:${row[1]}">${row[0]}</span>`
     );
   }
   getRandomColor() {

@@ -1,5 +1,5 @@
 
-from .services import get_stopwords, word_count
+from .services import give_emoji_free_text, tagme, word_count, clean_text
 from .serializers import TwitSerializer
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
@@ -11,10 +11,7 @@ from decouple import config
 import tweepy
 import json 
 import datetime
-import string
-import re
-
-
+from sklearn.model_selection import train_test_split
 
 auth = tweepy.OAuthHandler(config('ConsumerKey'), config('ConsumerSecret'))
 auth.set_access_token(config('Key'), config('Secret'))
@@ -27,26 +24,40 @@ class SearchResultView(RetrieveAPIView):
 
     def get(self,request ):
         key = request.query_params.get('key')
+        language = request.query_params.get('language')
         tweets = tweepy.Cursor(api.search,
               tweet_mode='extended',
               q=key,
-              lang="en").items(100)
+              lang=language).items(1)
         tweets_arr = []
-        clean_tweets = ''
+        clean_tweet = ''
+        clean_tweets = []
         words = []
-        stopwords = get_stopwords()
         json_str = '['
-        table = str.maketrans(dict.fromkeys(string.punctuation))
+        full_text =''
         for tweet in tweets:            
             json_str = json_str + json.dumps(tweet._json) + ','
-            tweets_arr.append(tweet.full_text)
-            querywords = tweet.full_text.lower()
-            querywords  = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)","", querywords).split())
-            querywords = querywords.translate(table)
-            querywords = querywords.split()
-            resultwords  = [ word for word in querywords if word.lower() not in stopwords]
-            clean_tweets = clean_tweets + ' '.join(resultwords)
-            words = word_count(clean_tweets)
+            full_text = tweet.full_text
+            if hasattr(tweet, 'retweeted_status'):
+                full_text = tweet.retweeted_status.full_text
+            clean_tweet = give_emoji_free_text(full_text)
+            clean_tweets.append(clean_text(clean_tweet))
+            print(tagme({"lang":language, "text":full_text, "rho": 75}))            
+            tweets_arr.append(full_text)
+        words = word_count(clean_tweets)
+
+        # train, test = train_test_split(clean_tweets,test_size = 0.1)
+        # train_pos = train[ train['sentiment'] == 'Positive']
+        # print(train_pos)
+        # train_pos = train_pos['text']
+        # print(train_pos)
+        # train_neg = train[ train['sentiment'] == 'Negative']
+        # train_neg = train_neg['text']
+        # train_neu = train[ train['sentiment'] == 'Neutral']
+        # train_neu = train_neu['text']
+
+
+
         json_str = json_str + ']'
         result = {
             'search_key_word':key,

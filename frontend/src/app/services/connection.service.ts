@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 
+export interface SearchModel {
+  key: string;
+  language: string;
+}
+
 @Injectable()
 export class ConnectionService {
   activeResults;
@@ -17,7 +22,9 @@ export class ConnectionService {
     return this.http.post(`${environment.api}signin`, user);
   }
 
-  search(key: string): Observable<any> {
-    return this.http.get(`${environment.api}search?key=${key}`);
+  search(search: SearchModel): Observable<any> {
+    return this.http.get(
+      `${environment.api}search?key=${search.key}&language=${search.language}`
+    );
   }
 }

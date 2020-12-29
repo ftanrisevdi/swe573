@@ -1,8 +1,6 @@
 rt
-4sq
 RT
 The
-Your
 a
 about
 above
@@ -287,6 +285,7 @@ until
 up
 upon
 us
+u
 very
 via
 was
@@ -326,3 +325,10 @@ your
 yours
 yourself
 yourselves
+ve
+ile
+bu
+şu
+\n
+I
+i

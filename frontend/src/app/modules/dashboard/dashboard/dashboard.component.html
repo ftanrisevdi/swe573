@@ -1,10 +1,14 @@
 <form [formGroup]="searchForm" (ngSubmit)="submit()">
-  <input placeholder="key" type="text" formControlName="key" class="form-control"
-    [ngClass]="{ 'invalid': submitted && f.key.errors }" />
-  <p *ngIf="submitted && f.key.errors" class="invalid-feedback">
-    <ng-container *ngIf="f.key.errors.required">Key is required</ng-container>
-    <ng-container *ngIf="f.key.errors.minlength">Key must be at least 2 characters</ng-container>
-  </p>
+  <label>Key: <input placeholder="key" type="text" formControlName="key" class="form-control"
+      [ngClass]="{ 'invalid': submitted && f.key.errors }" />
+    <p *ngIf="submitted && f.key.errors" class="invalid-feedback">
+      <ng-container *ngIf="f.key.errors.required">Key is required</ng-container>
+      <ng-container *ngIf="f.key.errors.minlength">Key must be at least 2 characters</ng-container>
+    </p>
+  </label>
+  <label>Language: <select formControlName="language">
+      <option *ngFor="let language of languages" [ngValue]="language">{{language}}</option>
+    </select> </label>
   <button type="submit">Get Twits</button>
 </form>
 <div #cloud class="cloud"></div>
@@ -15,5 +19,5 @@
 </div>
 
 <ol *ngIf="(result$ | async) as result ">
-  <li *ngFor="let twit of result.data.twits">{{twit}}</li>
+  <li *ngFor="let twit of result.data.twits" [innerHTML]="twit"></li>
 </ol>
