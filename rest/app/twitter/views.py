@@ -1,17 +1,26 @@
 
-from .services import give_emoji_free_text, tagme, word_count, clean_text
+import nltk
+import ssl
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download('vader_lexicon')
+from .services import give_emoji_free_text, mytagme_ann, remove_urls, word_count, clean_text
 from .serializers import TwitSerializer
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from termcolor import colored, cprint
 from decouple import config
 import tweepy
 import json 
 import datetime
-from sklearn.model_selection import train_test_split
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 
 auth = tweepy.OAuthHandler(config('ConsumerKey'), config('ConsumerSecret'))
 auth.set_access_token(config('Key'), config('Secret'))
@@ -28,36 +37,28 @@ class SearchResultView(RetrieveAPIView):
         tweets = tweepy.Cursor(api.search,
               tweet_mode='extended',
               q=key,
-              lang=language).items(1)
+              lang=language).items(10)
         tweets_arr = []
         clean_tweet = ''
-        clean_tweets = []
+        clean_tweets = ''
         words = []
         json_str = '['
         full_text =''
-        for tweet in tweets:            
-            json_str = json_str + json.dumps(tweet._json) + ','
+        analyzer = SentimentIntensityAnalyzer()        
+        for tweet in tweets:           
             full_text = tweet.full_text
             if hasattr(tweet, 'retweeted_status'):
-                full_text = tweet.retweeted_status.full_text
+                full_text = tweet.retweeted_status.full_text         
+            json_str = json_str + json.dumps(tweet._json) + ','
             clean_tweet = give_emoji_free_text(full_text)
-            clean_tweets.append(clean_text(clean_tweet))
-            print(tagme({"lang":language, "text":full_text, "rho": 75}))            
-            tweets_arr.append(full_text)
+            clean_tweet = remove_urls(clean_tweet)             
+            clean_tweets = clean_tweets + clean_text(clean_tweet)           
+            tweets_arr.append({
+                'text':full_text, 
+                'sentiment':analyzer.polarity_scores(full_text), 
+                'annotations': mytagme_ann(clean_tweet) })
+
         words = word_count(clean_tweets)
-
-        # train, test = train_test_split(clean_tweets,test_size = 0.1)
-        # train_pos = train[ train['sentiment'] == 'Positive']
-        # print(train_pos)
-        # train_pos = train_pos['text']
-        # print(train_pos)
-        # train_neg = train[ train['sentiment'] == 'Negative']
-        # train_neg = train_neg['text']
-        # train_neu = train[ train['sentiment'] == 'Neutral']
-        # train_neu = train_neu['text']
-
-
-
         json_str = json_str + ']'
         result = {
             'search_key_word':key,

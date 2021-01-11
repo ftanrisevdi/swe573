@@ -1,6 +1,3 @@
-rt
-RT
-The
 a
 about
 above
@@ -278,6 +275,9 @@ toward
 towards
 twelve
 twenty
+rt
+RT
+The
 two
 un
 under
@@ -325,10 +325,3 @@ your
 yours
 yourself
 yourselves
-ve
-ile
-bu
-şu
-\n
-I
-i

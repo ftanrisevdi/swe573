@@ -7,7 +7,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { ConnectionService } from '../../../services/connection.service';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
@@ -34,6 +34,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   barChartPlugins = [];
   barChartData = [];
   languages = ['en', 'tr'];
+  sub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,13 +56,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if (this.searchForm.invalid) {
       return;
     }
+    if (this.result$) {
+      this.sub.unsubscribe();
+    }
     this.result$ = this.connectionService
       .search({
         key: this.searchForm.get('key').value,
         language: this.searchForm.get('language').value,
       })
       .pipe(share());
-    this.result$.subscribe((result) => {
+    this.sub = this.result$.subscribe((result) => {
+      this.barChartLabels = [];
+      this.words = [];
       this.cloud.nativeElement.innerHTML = '';
       for (let i = 0; i < result.data.wordCount.length; i++) {
         this.wordCloud(result.data.wordCount[i]);
@@ -70,6 +76,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.words.push(result.data.wordCount[i][1]);
         }
       }
+      result.data.twits.forEach((element) => {
+        element = this.makeLinkTree(element);
+      });
       this.barChartData.push({
         data: this.words,
         label: 'Words',
@@ -80,6 +89,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.data.forEach((row) => {
       this.wordCloud(row);
     });
+  }
+  makeLinkTree(twit) {
+    for (let key in twit.annotations) {
+      twit.text = twit.text.replace(
+        key,
+        `<a href="https://en.wikipedia.org/wiki/${twit.annotations[key][
+          'link'
+        ].replace(' ', '_')}" target="_blank">${key}</a>`
+      );
+    }
+    return twit;
   }
 
   wordCloud(row) {

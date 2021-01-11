@@ -1,4 +1,5 @@
 <form [formGroup]="searchForm" (ngSubmit)="submit()">
+
   <label>Key: <input placeholder="key" type="text" formControlName="key" class="form-control"
       [ngClass]="{ 'invalid': submitted && f.key.errors }" />
     <p *ngIf="submitted && f.key.errors" class="invalid-feedback">
@@ -17,7 +18,12 @@
     [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
   </canvas>
 </div>
-
-<ol *ngIf="(result$ | async) as result ">
-  <li *ngFor="let twit of result.data.twits" [innerHTML]="twit"></li>
-</ol>
+<ng-container *ngIf="(result$ | async) as result ">
+  <div class="twit" *ngFor="let twit of result.data.twits">
+    <span class="twit-text" [innerHTML]="twit.text"></span>
+    <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>
+    <span class="twit-sentiment pos" width="100"
+      *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Positive :)</span>
+    <span class="twit-sentiment neu" width="100" *ngIf="twit.sentiment.compound <= -0.05">Neutral :|</span>
+  </div>
+</ng-container>
