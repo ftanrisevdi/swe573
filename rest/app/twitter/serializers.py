@@ -3,11 +3,10 @@ from rest_framework import serializers
 
 
 class TwitSerializer(serializers.ModelSerializer):
-    user =  serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Twit
-        fields = ['id', 'search_key_word', 'created','twits', 'user', 'clean_twits']
+        fields = ['id', 'search_key_word', 'created','twits', 'clean_twits','user_id' ]
 
 
     def create(self, validated_data):

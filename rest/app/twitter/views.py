@@ -37,7 +37,7 @@ class SearchResultView(RetrieveAPIView):
         tweets = tweepy.Cursor(api.search,
               tweet_mode='extended',
               q=key,
-              lang=language).items(10)
+              lang=language).items(1)
         tweets_arr = []
         clean_tweet = ''
         clean_tweets = ''
@@ -60,12 +60,15 @@ class SearchResultView(RetrieveAPIView):
 
         words = word_count(clean_tweets)
         json_str = json_str + ']'
+        
         result = {
             'search_key_word':key,
             'twits':json_str,
             'created':datetime.datetime.now(),
-            'cleanTwits': clean_tweets,
+            'clean_twits': clean_tweets,
+            'user_id': str(request.user)
         }
+        print(result)
         serializer = self.serializer_class(data=result)
         serializer.is_valid(raise_exception=True)
         serializer.save()

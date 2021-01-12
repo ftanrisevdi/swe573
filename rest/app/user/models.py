@@ -52,4 +52,4 @@ class User(AbstractBaseUser):
         '''
         to set table name in database
         '''
-        db_table = "login"
+        db_table = "users"
