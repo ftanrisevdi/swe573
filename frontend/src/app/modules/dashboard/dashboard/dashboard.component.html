@@ -7,9 +7,8 @@
       <ng-container *ngIf="f.key.errors.minlength">Key must be at least 2 characters</ng-container>
     </p>
   </label>
-  <label>Language: <select formControlName="language">
-      <option *ngFor="let language of languages" [ngValue]="language">{{language}}</option>
-    </select> </label>
+  <label>How many twets you would like to see? <small>(default 100):</small> <input type="number"
+      formControlName="tweetCount" class="form-control"> </label>
   <button type="submit">Get Twits</button>
 </form>
 <div #cloud class="cloud"></div>

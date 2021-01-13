@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { faHandPointLeft } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +8,4 @@ import { faHandPointLeft } from '@fortawesome/free-regular-svg-icons';
 })
 export class AppComponent {
   title = 'frontend';
-  faHandPointLeft = faHandPointLeft;
 }

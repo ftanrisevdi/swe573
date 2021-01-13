@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
       key: ['', [Validators.required, Validators.minLength(2)]],
-      language: ['en', [Validators.required]],
+      tweetCount: [100, [Validators.required]],
     });
   }
   get f() {
@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.result$ = this.connectionService
       .search({
         key: this.searchForm.get('key').value,
-        language: this.searchForm.get('language').value,
+        tweetCount: this.searchForm.get('tweetCount').value,
       })
       .pipe(share());
     this.sub = this.result$.subscribe((result) => {

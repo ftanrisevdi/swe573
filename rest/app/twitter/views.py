@@ -33,11 +33,11 @@ class SearchResultView(RetrieveAPIView):
 
     def get(self,request ):
         key = request.query_params.get('key')
-        language = request.query_params.get('language')
+        tweet_count = request.query_params.get('tweetCount')
         tweets = tweepy.Cursor(api.search,
               tweet_mode='extended',
               q=key,
-              lang=language).items(1)
+              lang='en').items(int(tweet_count))
         tweets_arr = []
         clean_tweet = ''
         clean_tweets = ''
@@ -68,7 +68,6 @@ class SearchResultView(RetrieveAPIView):
             'clean_twits': clean_tweets,
             'user_id': str(request.user)
         }
-        print(result)
         serializer = self.serializer_class(data=result)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -85,5 +84,22 @@ class SearchResultView(RetrieveAPIView):
         status_code = status.HTTP_200_OK
 
         return Response(response, status=status_code)
+
+class LogView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+    serializer_class = TwitSerializer
+
+    def get(self,request ):
+        
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'data': 'test'
+            }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
+
 
 

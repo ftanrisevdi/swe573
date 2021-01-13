@@ -62,7 +62,8 @@ def clean_text(text):
   filtered_sentence = [w for w in filtered_sentence if not w in get_stopwords()]
   filtered_sentence = [w for w in filtered_sentence if not w in get_stop_custom_characters()]
   for w in filtered_sentence:
-    lemmatize.append(lemmatizer.lemmatize(w))
+    lemma =lemmatizer.lemmatize(w, pos="v")
+    lemmatize.append(lemma)
   result = result + ' '.join(lemmatize)
   return result 
 
@@ -76,7 +77,6 @@ def mytagme_ann(data):
   annotations = tagme.annotate(data)
   dic ={}
   for ann in annotations.get_annotations(0.2):
-     
       try:
           A, B, score = str(ann).split(" -> ")[0], str(ann).split(" -> ")[1].split(" (score: ")[0], str(ann).split(" -> ")[1].split(" (score: ")[1].split(")")[0]
           dic[A] = {

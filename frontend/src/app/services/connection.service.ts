@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 
 export interface SearchModel {
   key: string;
-  language: string;
+  tweetCount: number;
 }
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ConnectionService {
 
   search(search: SearchModel): Observable<any> {
     return this.http.get(
-      `${environment.api}search?key=${search.key}&language=${search.language}`
+      `${environment.api}search?key=${search.key}&tweetCount=${search.tweetCount}`
     );
   }
 }

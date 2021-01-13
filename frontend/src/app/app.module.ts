@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ConnectionService } from 'src/app/services/connection.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoadingIndicatorInterceptor } from './loading/loading-indicator.interceptor';
+import { LoadingIndicatorModule } from './loading/loading-indicator.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,11 +14,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
+    LoadingIndicatorModule,
   ],
   providers: [
     ConnectionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingIndicatorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
