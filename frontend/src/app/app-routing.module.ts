@@ -14,6 +14,11 @@ const routes: Routes = [
         (m) => m.DashboardModule
       ),
   },
+  {
+    path: 'history',
+    loadChildren: () =>
+      import('./modules/history/history.module').then((m) => m.HistoryModule),
+  },
   { path: '**', redirectTo: 'login' },
 ];
 

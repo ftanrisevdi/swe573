@@ -11,13 +11,14 @@
       formControlName="tweetCount" class="form-control"> </label>
   <button type="submit">Get Twits</button>
 </form>
-<div #cloud class="cloud"></div>
-<div id="barChart" *ngIf="barChartData.length > 0">
-  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-    [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-  </canvas>
-</div>
+
 <ng-container *ngIf="(result$ | async) as result ">
+  <angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
+  <div id="barChart" *ngIf="barChartData.length > 0">
+    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+      [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+    </canvas>
+  </div>
   <div class="twit" *ngFor="let twit of result.data.twits">
     <span class="twit-text" [innerHTML]="twit.text"></span>
     <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>

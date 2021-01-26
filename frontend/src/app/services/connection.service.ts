@@ -27,4 +27,11 @@ export class ConnectionService {
       `${environment.api}search?key=${search.key}&tweetCount=${search.tweetCount}`
     );
   }
+  history(): Observable<any> {
+    return this.http.get(`${environment.api}history`);
+  }
+
+  logById(id: number): Observable<any> {
+    return this.http.get(`${environment.api}history/${id}`);
+  }
 }

@@ -1,4 +1,3 @@
-
 import nltk
 import ssl
 try:
@@ -10,6 +9,7 @@ else:
 nltk.download('vader_lexicon')
 from .services import give_emoji_free_text, mytagme_ann, remove_urls, word_count, clean_text
 from .serializers import TwitSerializer
+from .models import Twit
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,6 +20,7 @@ import tweepy
 import json 
 import datetime
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from django.http import JsonResponse
 
 
 auth = tweepy.OAuthHandler(config('ConsumerKey'), config('ConsumerSecret'))
@@ -85,21 +86,38 @@ class SearchResultView(RetrieveAPIView):
 
         return Response(response, status=status_code)
 
-class LogView(RetrieveAPIView):
+class HistoryListView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
     serializer_class = TwitSerializer
 
-    def get(self,request ):
-        
+    def get(self,request):
+        data = Twit.objects.filter(user_id = request.user).values('id', 'created', 'search_key_word')
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
-            'data': 'test'
+            'data':  data
             }
         status_code = status.HTTP_200_OK
 
         return Response(response, status=status_code)
 
+class HistoryView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+    serializer_class = TwitSerializer
 
+    def get(self, request, *args, **kwargs):
+        item_id = int(kwargs.pop('id'))
+        print(item_id)
+        data = Twit.objects.filter(user_id = request.user, id = item_id )
+        serializer = TwitSerializer(data, many=True)
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'data':  serializer.data
+            }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
 
