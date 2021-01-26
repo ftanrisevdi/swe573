@@ -1,0 +1,5 @@
+<div id="barChart" *ngIf="datasets.length > 0">
+  <canvas baseChart [datasets]="datasets" [labels]="labels" [options]="options" [plugins]="plugins" [legend]="legend"
+    [chartType]="chartType">
+  </canvas>
+</div>

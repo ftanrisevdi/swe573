@@ -1,0 +1,11 @@
+<angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
+<app-bar-chart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+  [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"></app-bar-chart>
+
+<div class="twit" *ngFor="let twit of result.data.twits">
+  <span class="twit-text" [innerHTML]="twit.text"></span>
+  <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>
+  <span class="twit-sentiment pos" width="100"
+    *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Positive :)</span>
+  <span class="twit-sentiment neu" width="100" *ngIf="twit.sentiment.compound <= -0.05">Neutral :|</span>
+</div>

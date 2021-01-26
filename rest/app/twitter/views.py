@@ -1,5 +1,7 @@
+from collections import OrderedDict
 import nltk
 import ssl
+import pprint
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
@@ -65,9 +67,11 @@ class SearchResultView(RetrieveAPIView):
         result = {
             'search_key_word':key,
             'twits':json_str,
+            'cooked':str(tweets_arr),
             'created':datetime.datetime.now(),
             'clean_twits': clean_tweets,
-            'user_id': str(request.user)
+            'user_id': str(request.user),
+            'word_count': str(words)
         }
         serializer = self.serializer_class(data=result)
         serializer.is_valid(raise_exception=True)
@@ -76,10 +80,10 @@ class SearchResultView(RetrieveAPIView):
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
             'data': {
-                    'rawData':  json_str,
-                    'twits': tweets_arr,
+                    'twits':  json_str,
+                    'cooked': tweets_arr,
                     'cleanTwits': clean_tweets,
-                    "wordCount": words
+                    'wordCount': words
                 } 
             }
         status_code = status.HTTP_200_OK
@@ -112,10 +116,17 @@ class HistoryView(RetrieveAPIView):
         print(item_id)
         data = Twit.objects.filter(user_id = request.user, id = item_id )
         serializer = TwitSerializer(data, many=True)
+        dicttt = json.dumps(OrderedDict(serializer.data[0]))
+        jsonn = json.loads(dicttt)
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
-            'data':  serializer.data
+            'data':{
+                    'twits':  jsonn['twits'],
+                    'cooked': jsonn['cooked'],
+                    'cleanTwits': jsonn['clean_twits'],
+                    'wordCount': jsonn['word_count']
+                }   
             }
         status_code = status.HTTP_200_OK
 

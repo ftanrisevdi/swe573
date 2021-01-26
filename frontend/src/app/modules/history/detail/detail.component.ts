@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
+import { ChartOptions, ChartType } from 'chart.js';
 import { Observable } from 'rxjs';
 import { ConnectionService } from 'src/app/services/connection.service';
 
@@ -11,6 +13,7 @@ import { ConnectionService } from 'src/app/services/connection.service';
 })
 export class DetailComponent implements OnInit {
   log$: Observable<any>;
+
   constructor(
     private route: ActivatedRoute,
     private connectionService: ConnectionService
@@ -18,8 +21,5 @@ export class DetailComponent implements OnInit {
   ngOnInit(): void {
     const id: number = parseInt(this.route.snapshot.params.itemId, 10);
     this.log$ = this.connectionService.logById(id);
-    this.log$.subscribe((item) => {
-      // console.log(item);
-    });
   }
 }
