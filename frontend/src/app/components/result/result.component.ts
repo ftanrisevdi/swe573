@@ -34,8 +34,28 @@ export class ResultComponent implements OnInit {
     this.barChartLabels = [];
     this.words = [];
     this.data = [];
-    this.result.data.twits.forEach((element) => this.makeLinkTree(element));
-
+    if (
+      this.result?.data?.twits &&
+      typeof this.result.data.twits === 'string'
+    ) {
+      this.result.data.twits = JSON.parse(this.result.data.twits);
+    }
+    if (
+      this.result?.data?.cooked &&
+      typeof this.result.data.cooked === 'string'
+    ) {
+      this.result.data.cooked = JSON.parse(this.result.data.cooked);
+    }
+    if (
+      this.result?.data?.wordCount &&
+      typeof this.result.data.wordCount === 'string'
+    ) {
+      this.result.data.wordCount = JSON.parse(this.result.data.wordCount);
+    }
+    console.log(this.result.data);
+    this.result.data.twits.forEach((element) => {
+      console.log(element.entities.hashtags);
+    });
     for (let i = 0; i < this.result.data.wordCount.length; i++) {
       this.data.push({
         text: this.result.data.wordCount[i][0],
@@ -45,7 +65,7 @@ export class ResultComponent implements OnInit {
       this.barChartLabels.push(this.result.data.wordCount[i][0]);
       this.words.push(this.result.data.wordCount[i][1]);
     }
-
+    this.result.data.cooked.forEach((element) => this.makeLinkTree(element));
     this.barChartData.push({
       data: this.words,
       label: 'Words',

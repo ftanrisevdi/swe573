@@ -1,23 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './modules/auth/login/login.component';
+import { DashboardComponent } from './modules/dashboard/dashboard/dashboard.component';
+import { DetailComponent } from './modules/history/detail/detail.component';
+import { HistoryComponent } from './modules/history/history/history.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () =>
-      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+    component: LoginComponent,
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./modules/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+    component: DashboardComponent,
+  },
+  {
+    path: 'history/:itemId',
+    component: DetailComponent,
   },
   {
     path: 'history',
-    loadChildren: () =>
-      import('./modules/history/history.module').then((m) => m.HistoryModule),
+    component: HistoryComponent,
   },
   { path: '**', redirectTo: 'login' },
 ];

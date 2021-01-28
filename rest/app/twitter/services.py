@@ -39,7 +39,7 @@ def get_stopcharacters():
   stopcharacters = [word.strip() for word in characters]
   return set(stopcharacters) 
 
-def get_stop_custom_characters():
+def get_stop_custom_word():
   characters = open(file_path_msw,'r')
   stopcharacters = [word.strip() for word in characters]
   return set(stopcharacters) 
@@ -57,10 +57,10 @@ def clean_text(text):
   result = ""
   lower = text.lower()
   lemmatize = [] 
-  word_tokens = ttkn.tokenize(lower)
-  filtered_sentence = [w for w in word_tokens if not w in get_stopcharacters()]  
-  filtered_sentence = [w for w in filtered_sentence if not w in get_stopwords()]
-  filtered_sentence = [w for w in filtered_sentence if not w in get_stop_custom_characters()]
+  filtered_sentence = ''.join([char for char in lower if not char in get_stopcharacters()] )
+  word_tokens = ttkn.tokenize(filtered_sentence)
+  filtered_sentence = [w for w in word_tokens if not w in get_stopwords()]
+  filtered_sentence = [w for w in filtered_sentence if not w in get_stop_custom_word()]
   for w in filtered_sentence:
     lemma =lemmatizer.lemmatize(w, pos="v")
     lemmatize.append(lemma)
@@ -80,8 +80,8 @@ def mytagme_ann(data):
       try:
           A, B, score = str(ann).split(" -> ")[0], str(ann).split(" -> ")[1].split(" (score: ")[0], str(ann).split(" -> ")[1].split(" (score: ")[1].split(")")[0]
           dic[A] = {
-              'link':B,
-              'score':score
+              "link":B,
+              "score":score
             }
           
       except:

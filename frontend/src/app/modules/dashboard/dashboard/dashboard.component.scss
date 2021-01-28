@@ -20,27 +20,3 @@ label {
     position: absolute;
   }
 }
-.twit {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid lightgrey;
-  span {
-    padding: 0 8px;
-  }
-  &-text {
-    flex-grow: 1;
-  }
-  &-sentiment {
-    white-space: nowrap;
-    &.neg {
-      color: red;
-    }
-    &.pos {
-      color: green;
-    }
-    &.neu {
-      color: orange;
-    }
-  }
-}

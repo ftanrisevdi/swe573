@@ -47,21 +47,22 @@ class SearchResultView(RetrieveAPIView):
         words = []
         json_str = '['
         full_text =''
-        analyzer = SentimentIntensityAnalyzer()        
+        analyzer = SentimentIntensityAnalyzer()             
         for tweet in tweets:           
             full_text = tweet.full_text
             if hasattr(tweet, 'retweeted_status'):
-                full_text = tweet.retweeted_status.full_text         
+                full_text = tweet.retweeted_status.full_text 
             json_str = json_str + json.dumps(tweet._json) + ','
             clean_tweet = give_emoji_free_text(full_text)
             clean_tweet = remove_urls(clean_tweet)             
             clean_tweets = clean_tweets + clean_text(clean_tweet)           
             tweets_arr.append({
-                'text':full_text, 
-                'sentiment':analyzer.polarity_scores(full_text), 
-                'annotations': mytagme_ann(clean_tweet) })
+                "text":full_text, 
+                "sentiment":analyzer.polarity_scores(full_text), 
+                "annotations": mytagme_ann(clean_tweet) })
 
         words = word_count(clean_tweets)
+        json_str = json_str[:-1]
         json_str = json_str + ']'
         
         result = {
@@ -80,7 +81,7 @@ class SearchResultView(RetrieveAPIView):
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
             'data': {
-                    'twits':  json_str,
+                    'twits': json.loads(json_str),
                     'cooked': tweets_arr,
                     'cleanTwits': clean_tweets,
                     'wordCount': words
@@ -106,6 +107,7 @@ class HistoryListView(RetrieveAPIView):
 
         return Response(response, status=status_code)
 
+import re
 class HistoryView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     authentication_class = JSONWebTokenAuthentication
@@ -117,18 +119,23 @@ class HistoryView(RetrieveAPIView):
         data = Twit.objects.filter(user_id = request.user, id = item_id )
         serializer = TwitSerializer(data, many=True)
         dicttt = json.dumps(OrderedDict(serializer.data[0]))
-        jsonn = json.loads(dicttt)
+        jsonn = json.loads(dicttt)        
+        p = re.compile('(?<!\\\\)\'')
+        cooked = p.sub('\"', jsonn['cooked'])
+        wordCount = p.sub('\"', jsonn['word_count'])
+        twits = p.sub('\"', jsonn['twits'])
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
             'data':{
-                    'twits':  jsonn['twits'],
-                    'cooked': jsonn['cooked'],
+                    'twits': twits,
+                    'cooked':cooked,
                     'cleanTwits': jsonn['clean_twits'],
-                    'wordCount': jsonn['word_count']
+                    'wordCount':wordCount
                 }   
             }
+        
         status_code = status.HTTP_200_OK
 
-        return Response(response, status=status_code)
+        return JsonResponse(response, status=status_code)
 

@@ -2,7 +2,7 @@
 <app-bar-chart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
   [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"></app-bar-chart>
 
-<div class="twit" *ngFor="let twit of result.data.twits">
+<div class="twit" *ngFor="let twit of result.data.cooked">
   <span class="twit-text" [innerHTML]="twit.text"></span>
   <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>
   <span class="twit-sentiment pos" width="100"
