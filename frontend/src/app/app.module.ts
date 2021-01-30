@@ -18,6 +18,7 @@ import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { GraphComponent } from './components/graph/graph.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     ResultComponent,
     BarChartComponent,
     RegisterComponent,
+    GraphComponent,
   ],
   imports: [
     NgxGraphModule,

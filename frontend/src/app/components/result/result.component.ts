@@ -52,10 +52,7 @@ export class ResultComponent implements OnInit {
     ) {
       this.result.data.wordCount = JSON.parse(this.result.data.wordCount);
     }
-    console.log(this.result.data);
-    this.result.data.twits.forEach((element) => {
-      console.log(element.entities.hashtags);
-    });
+
     for (let i = 0; i < this.result.data.wordCount.length; i++) {
       this.data.push({
         text: this.result.data.wordCount[i][0],

@@ -11,7 +11,5 @@
       formControlName="tweetCount" class="form-control"> </label>
   <button type="submit">Get Twits</button>
 </form>
-<ngx-graph class="chart-container" [view]="[800, 300]" [links]="links" [nodes]="nodes" [layout]="layout"
-  [curve]="curve">
-</ngx-graph>
+
 <app-result *ngIf="(result$ | async) as result " [result]="result"></app-result>
