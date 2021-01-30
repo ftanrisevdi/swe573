@@ -34,25 +34,6 @@ export class ResultComponent implements OnInit {
     this.barChartLabels = [];
     this.words = [];
     this.data = [];
-    if (
-      this.result?.data?.twits &&
-      typeof this.result.data.twits === 'string'
-    ) {
-      this.result.data.twits = JSON.parse(this.result.data.twits);
-    }
-    if (
-      this.result?.data?.cooked &&
-      typeof this.result.data.cooked === 'string'
-    ) {
-      this.result.data.cooked = JSON.parse(this.result.data.cooked);
-    }
-    if (
-      this.result?.data?.word_count &&
-      typeof this.result.data.word_count === 'string'
-    ) {
-      this.result.data.word_count = JSON.parse(this.result.data.word_count);
-    }
-
     for (let i = 0; i < this.result.data.word_count.length; i++) {
       this.data.push({
         text: this.result.data.word_count[i][0],

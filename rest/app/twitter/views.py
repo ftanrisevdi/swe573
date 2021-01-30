@@ -49,9 +49,13 @@ class SearchResultView(RetrieveAPIView):
         full_text =''
         analyzer = SentimentIntensityAnalyzer()             
         for tweet in tweets:           
-            full_text = tweet.full_text
+            full_text = tweet.full_text            
+            hashtags = tweet.entities['hashtags']
             if hasattr(tweet, 'retweeted_status'):
                 full_text = tweet.retweeted_status.full_text 
+                hashtags = tweet.retweeted_status.entities['hashtags']
+
+            print(tweet.entities['hashtags'])
             json_str = json_str + json.dumps(tweet._json) + ','
             clean_tweet = give_emoji_free_text(full_text)
             clean_tweet = remove_urls(clean_tweet)             
@@ -59,12 +63,13 @@ class SearchResultView(RetrieveAPIView):
             tweets_arr.append({
                 "text":full_text, 
                 "sentiment":analyzer.polarity_scores(full_text), 
-                "annotations": mytagme_ann(clean_tweet) })
+                "annotations": mytagme_ann(clean_tweet), 
+                "hashtags": hashtags })
+                
 
         words = word_count(clean_tweets)
         json_str = json_str[:-1]
         json_str = json_str + ']'
-        print(request.user)
         result = {
             'search_key_word':key,
             'twits':json.loads(json_str),
@@ -118,12 +123,6 @@ class HistoryView(RetrieveAPIView):
         print(item_id)
         data = Twit.objects.filter(user_id = request.user, id = item_id )
         serializer = TwitSerializer(data, many=True)
-        # dicttt = json.dumps(OrderedDict(serializer.data[0]))
-        # jsonn = json.loads(dicttt)        
-        # p = re.compile('(?<!\\\\)\'')
-        # cooked = p.sub('\"', jsonn['cooked'])
-        # wordCount = p.sub('\"', jsonn['word_count'])
-        # twits = p.sub('\"', jsonn['twits'])
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,

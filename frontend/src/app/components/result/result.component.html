@@ -1,8 +1,9 @@
 <angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
 <app-bar-chart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
   [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"></app-bar-chart>
-<!-- <app-graph [data]="result.data.twits"></app-graph> -->
-<div class="twit" *ngFor="let twit of result.data.cooked">
+<app-graph [data]="result.data.cooked"></app-graph>
+<div class="twit" *ngFor="let twit of result.data.cooked; let i = index">
+  <span>{{i}}</span>
   <span class="twit-text" [innerHTML]="twit.text"></span>
   <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>
   <span class="twit-sentiment pos" width="100"
