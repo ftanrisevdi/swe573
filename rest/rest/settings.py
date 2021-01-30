@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
@@ -30,8 +31,8 @@ SECRET_KEY =  config('DjangoSecretKey')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('Debug', cast=bool, default=True)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Application definition
 
