@@ -19,6 +19,8 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { GraphComponent } from './components/graph/graph.component';
+import { AuthGuard } from './route-guards/auth.guard';
+import { HeaderComponent } from './components/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { GraphComponent } from './components/graph/graph.component';
     BarChartComponent,
     RegisterComponent,
     GraphComponent,
+    HeaderComponent,
   ],
   imports: [
     NgxGraphModule,
@@ -42,6 +45,7 @@ import { GraphComponent } from './components/graph/graph.component';
     ChartsModule,
   ],
   providers: [
+    AuthGuard,
     ConnectionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {

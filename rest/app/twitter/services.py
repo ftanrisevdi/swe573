@@ -48,7 +48,7 @@ def word_count(sentences):
   arr =[]
   tokens = ttkn.tokenize(sentences)
   fdist=FreqDist(tokens)
-  d = fdist.most_common(10)
+  d = fdist.most_common(20)
   for key, repeat in d:
     arr.append([key,repeat])
   return arr

@@ -4,6 +4,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { DashboardComponent } from './modules/dashboard/dashboard/dashboard.component';
 import { DetailComponent } from './modules/history/detail/detail.component';
 import { HistoryComponent } from './modules/history/history/history.component';
+import { AuthGuard } from './route-guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,14 +14,17 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'history/:itemId',
     component: DetailComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'history',
     component: HistoryComponent,
+    canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: 'login' },
 ];

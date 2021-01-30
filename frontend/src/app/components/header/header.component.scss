@@ -1,0 +1,15 @@
+app-header {
+  display: flex;
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+  a {
+    text-decoration: none;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    margin: 4px;
+  }
+}
+.header-menu li {
+  display: inline-block;
+}

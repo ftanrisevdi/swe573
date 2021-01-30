@@ -54,8 +54,6 @@ class SearchResultView(RetrieveAPIView):
             if hasattr(tweet, 'retweeted_status'):
                 full_text = tweet.retweeted_status.full_text 
                 hashtags = tweet.retweeted_status.entities['hashtags']
-
-            print(tweet.entities['hashtags'])
             json_str = json_str + json.dumps(tweet._json) + ','
             clean_tweet = give_emoji_free_text(full_text)
             clean_tweet = remove_urls(clean_tweet)             
@@ -89,7 +87,7 @@ class SearchResultView(RetrieveAPIView):
                     'twits': json.loads(json_str),
                     'cooked': tweets_arr,
                     'cleanTwits': clean_tweets,
-                    'wordCount': words
+                    'word_count': words
                 } 
             }
         status_code = status.HTTP_200_OK
@@ -120,7 +118,6 @@ class HistoryView(RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         item_id = int(kwargs.pop('id'))
-        print(item_id)
         data = Twit.objects.filter(user_id = request.user, id = item_id )
         serializer = TwitSerializer(data, many=True)
         response = {

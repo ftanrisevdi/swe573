@@ -1,0 +1,5 @@
+<a *ngIf="showMenu" routerLink="/dashboard"><i class="fa fa-search"></i> Search </a>
+<ul class="header-menu" *ngIf="showMenu">
+  <li><a routerLink="/history"><i class="fa fa-history"></i> History </a> </li>
+  <li><button (click)="logout()"> Logout</button> </li>
+</ul>

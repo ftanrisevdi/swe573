@@ -5,7 +5,7 @@ class Twit(models.Model):
     
     search_key_word = models.CharField(max_length=100) 
     created = models.DateTimeField()
-    clean_twits = models.JSONField()
+    clean_twits =models.JSONField() 
     cooked =  models.JSONField()
     word_count = models.JSONField()
     twits = models.JSONField()
