@@ -64,15 +64,15 @@ class SearchResultView(RetrieveAPIView):
         words = word_count(clean_tweets)
         json_str = json_str[:-1]
         json_str = json_str + ']'
-        
+        print(request.user)
         result = {
             'search_key_word':key,
-            'twits':json_str,
-            'cooked':str(tweets_arr),
+            'twits':json.loads(json_str),
+            'cooked':tweets_arr,
             'created':datetime.datetime.now(),
             'clean_twits': clean_tweets,
             'user_id': str(request.user),
-            'word_count': str(words)
+            'word_count': words
         }
         serializer = self.serializer_class(data=result)
         serializer.is_valid(raise_exception=True)
@@ -118,21 +118,16 @@ class HistoryView(RetrieveAPIView):
         print(item_id)
         data = Twit.objects.filter(user_id = request.user, id = item_id )
         serializer = TwitSerializer(data, many=True)
-        dicttt = json.dumps(OrderedDict(serializer.data[0]))
-        jsonn = json.loads(dicttt)        
-        p = re.compile('(?<!\\\\)\'')
-        cooked = p.sub('\"', jsonn['cooked'])
-        wordCount = p.sub('\"', jsonn['word_count'])
-        twits = p.sub('\"', jsonn['twits'])
+        # dicttt = json.dumps(OrderedDict(serializer.data[0]))
+        # jsonn = json.loads(dicttt)        
+        # p = re.compile('(?<!\\\\)\'')
+        # cooked = p.sub('\"', jsonn['cooked'])
+        # wordCount = p.sub('\"', jsonn['word_count'])
+        # twits = p.sub('\"', jsonn['twits'])
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
-            'data':{
-                    'twits': twits,
-                    'cooked':cooked,
-                    'cleanTwits': jsonn['clean_twits'],
-                    'wordCount':wordCount
-                }   
+            'data':serializer.data[0]  
             }
         
         status_code = status.HTTP_200_OK

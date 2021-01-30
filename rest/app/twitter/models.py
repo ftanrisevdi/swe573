@@ -1,4 +1,3 @@
-from ..user.models import User
 from django.db import models
 
 
@@ -6,11 +5,12 @@ class Twit(models.Model):
     
     search_key_word = models.CharField(max_length=100) 
     created = models.DateTimeField()
-    clean_twits = models.CharField(max_length=1000000)
-    cooked = models.CharField(max_length=1000000, default='')
-    word_count = models.CharField(max_length=1000000, default='')
-    twits = models.CharField(max_length=1000000)
+    clean_twits = models.JSONField()
+    cooked =  models.JSONField()
+    word_count = models.JSONField()
+    twits = models.JSONField()
     user_id = models.CharField(max_length=255)
+    
 
     def __str__(self):
         return self.id

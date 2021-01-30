@@ -47,20 +47,20 @@ export class ResultComponent implements OnInit {
       this.result.data.cooked = JSON.parse(this.result.data.cooked);
     }
     if (
-      this.result?.data?.wordCount &&
-      typeof this.result.data.wordCount === 'string'
+      this.result?.data?.word_count &&
+      typeof this.result.data.word_count === 'string'
     ) {
-      this.result.data.wordCount = JSON.parse(this.result.data.wordCount);
+      this.result.data.word_count = JSON.parse(this.result.data.word_count);
     }
 
-    for (let i = 0; i < this.result.data.wordCount.length; i++) {
+    for (let i = 0; i < this.result.data.word_count.length; i++) {
       this.data.push({
-        text: this.result.data.wordCount[i][0],
-        weight: this.result.data.wordCount[i][1],
+        text: this.result.data.word_count[i][0],
+        weight: this.result.data.word_count[i][1],
         color: this.getRandomColor(),
       });
-      this.barChartLabels.push(this.result.data.wordCount[i][0]);
-      this.words.push(this.result.data.wordCount[i][1]);
+      this.barChartLabels.push(this.result.data.word_count[i][0]);
+      this.words.push(this.result.data.word_count[i][1]);
     }
     this.result.data.cooked.forEach((element) => this.makeLinkTree(element));
     this.barChartData.push({
