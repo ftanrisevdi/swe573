@@ -1,12 +1,30 @@
-<angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
-<app-bar-chart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-  [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"></app-bar-chart>
-<app-graph [data]="result.data.cooked"></app-graph>
-<div class="twit" *ngFor="let twit of result.data.cooked; let i = index">
-  <span>{{i}}</span>
-  <span class="twit-text" [innerHTML]="twit.text"></span>
-  <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(</span>
-  <span class="twit-sentiment pos" width="100"
-    *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Positive :)</span>
-  <span class="twit-sentiment neu" width="100" *ngIf="twit.sentiment.compound <= -0.05">Neutral :|</span>
+<div class="angular-tag-cloud">
+  <h3>The first 20 most used words' cloud </h3>
+  <angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
+</div>
+<div class="app-bar-chart">
+  <h3>The first 20 most used words' bar-chart</h3>
+  <app-bar-chart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+    [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"></app-bar-chart>
+</div>
+<!-- <div class="app-graph">
+  <app-graph [data]="result.data.cooked"></app-graph>
+</div> -->
+
+
+<div class="twit-container">
+  <div class="twit-header">
+    <span class="twit-text"> Twit's full text <small>You can click on links to visit their explanations</small> </span>
+    <span class="twit-sentiment">Sentiment Anaysis</span>
+  </div>
+  <div class="twit" *ngFor="let twit of result.data.cooked; let i = index">
+    <span class="twit-text" [innerHTML]="twit.text"></span>
+    <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(<br>
+      <small>compound : {{twit.sentiment.compound}}</small></span>
+    <span class="twit-sentiment pos" width="100"
+      *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Positive :) <br>
+      <small>compound : {{twit.sentiment.compound}}</small></span>
+    <span class="twit-sentiment neu" width="100" *ngIf="twit.sentiment.compound <= -0.05">Neutral :| <br>
+      <small>compound : {{twit.sentiment.compound}}</small></span>
+  </div>
 </div>

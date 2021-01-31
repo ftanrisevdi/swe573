@@ -5,11 +5,13 @@ import { DashboardComponent } from './modules/dashboard/dashboard/dashboard.comp
 import { DetailComponent } from './modules/history/detail/detail.component';
 import { HistoryComponent } from './modules/history/history/history.component';
 import { AuthGuard } from './route-guards/auth.guard';
+import { UnauthGuard } from './route-guards/unauth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [UnauthGuard],
   },
   {
     path: 'dashboard',

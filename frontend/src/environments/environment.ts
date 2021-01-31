@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://swe573-api-prod.herokuapp.com/api/',
+  api: 'http://127.0.0.1:8000/api/',
 };
 
 /*

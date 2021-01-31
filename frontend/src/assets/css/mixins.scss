@@ -1,0 +1,15 @@
+@mixin listItem() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+}
+
+@mixin listItemHeader() {
+  span {
+    font-size: 1.17em;
+    font-weight: bold;
+  }
+}

@@ -1,5 +1,6 @@
-<a *ngIf="showMenu" routerLink="/dashboard"><i class="fa fa-search"></i> Search </a>
+<span><i class="icon-xing"></i> Search For It <small>Beta 1.0</small> </span>
 <ul class="header-menu" *ngIf="showMenu">
-  <li><a routerLink="/history"><i class="fa fa-history"></i> History </a> </li>
-  <li><button (click)="logout()"> Logout</button> </li>
+  <li><a *ngIf="showMenu" routerLink="/dashboard"><i class="icon-search"></i> Search </a></li>
+  <li><a routerLink="/history"><i class="icon-copy"></i> History </a> </li>
+  <li><button type="button" (click)="logout()"> Logout</button> </li>
 </ul>

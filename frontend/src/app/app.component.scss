@@ -12,10 +12,22 @@
 input[type="text"],
 input[type="password"] {
   padding: 4px;
+  border: 1px solid #ccc;
 }
 button {
   padding: 4px;
 }
+button[type="submit"] {
+  background-color: green;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: white;
+}
+label {
+  display: block;
+}
+
 .container {
   display: flex;
 }
@@ -54,4 +66,10 @@ loading {
     left: 50%;
     margin: -100px 0 0 -45px;
   }
+}
+app-root {
+  display: block;
+}
+.container {
+  padding: 32px;
 }

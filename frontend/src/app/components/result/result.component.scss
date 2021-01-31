@@ -1,8 +1,26 @@
-.twit {
+@import "./../../../assets/css/mixins.scss";
+
+app-result {
   display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid lightgrey;
+  flex-wrap: wrap;
+}
+.angular-tag-cloud,
+.app-bar-chart,
+.twit-container {
+  width: calc(50% - 32px) !important;
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+}
+.twit-container {
+  width: calc(100% - 32px) !important;
+}
+.twit-header {
+  @include listItemHeader();
+}
+.twit,
+.twit-header {
+  @include listItem();
   span {
     padding: 0 8px;
   }
@@ -21,4 +39,11 @@
       color: orange;
     }
   }
+  small {
+    color: black;
+    font-size: 10px;
+  }
+}
+.twit:last-child {
+  border: none;
 }

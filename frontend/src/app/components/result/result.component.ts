@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
 import { ChartOptions, ChartType } from 'chart.js';
 
@@ -6,6 +6,7 @@ import { ChartOptions, ChartType } from 'chart.js';
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ResultComponent implements OnInit {
   @Input()
@@ -15,6 +16,15 @@ export class ResultComponent implements OnInit {
 
   barChartOptions: ChartOptions = {
     responsive: true,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   };
   barChartLabels = [];
   barChartType: ChartType = 'bar';
@@ -23,8 +33,7 @@ export class ResultComponent implements OnInit {
   barChartLegend = true;
 
   options: CloudOptions = {
-    width: window.innerWidth,
-    height: 400,
+    width: window.innerWidth / 2 - 100,
     overflow: false,
   };
 

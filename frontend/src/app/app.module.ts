@@ -21,6 +21,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { GraphComponent } from './components/graph/graph.component';
 import { AuthGuard } from './route-guards/auth.guard';
 import { HeaderComponent } from './components/header/header.component';
+import { UnauthGuard } from './route-guards/unauth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { HeaderComponent } from './components/header/header.component';
     ChartsModule,
   ],
   providers: [
+    UnauthGuard,
     AuthGuard,
     ConnectionService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

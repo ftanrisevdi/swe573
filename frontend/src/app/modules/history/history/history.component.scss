@@ -1,0 +1,16 @@
+.history {
+  th,
+  td {
+    text-align: left;
+    padding: 6px 12px;
+    border-bottom: 1px solid #ccc;
+    margin: 0px;
+  }
+  tr {
+    &:last-child {
+      td {
+        border: none;
+      }
+    }
+  }
+}

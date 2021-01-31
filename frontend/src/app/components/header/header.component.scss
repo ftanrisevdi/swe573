@@ -3,11 +3,19 @@ app-header {
   padding: 12px;
   justify-content: space-between;
   align-items: center;
-  a {
+  background: #f9f9f9;
+  box-shadow: 0px 2px 2px 0px rgba(184, 185, 209, 1);
+  a,
+  button {
     text-decoration: none;
     border: 1px solid #ccc;
     padding: 6px 12px;
     margin: 4px;
+    background: white;
+    font-size: 14px;
+  }
+  a:visited {
+    color: black;
   }
 }
 .header-menu li {

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
-import { ChartOptions, ChartType } from 'chart.js';
 import { Observable } from 'rxjs';
 import { ConnectionService } from 'src/app/services/connection.service';
 
