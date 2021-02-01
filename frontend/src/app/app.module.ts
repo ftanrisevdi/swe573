@@ -22,6 +22,8 @@ import { GraphComponent } from './components/graph/graph.component';
 import { AuthGuard } from './route-guards/auth.guard';
 import { HeaderComponent } from './components/header/header.component';
 import { UnauthGuard } from './route-guards/unauth.guard';
+import { AlertHandlingModule } from './components/alert-handling/alert.module';
+import { ErrorInterceptor } from './components/alert-handling/interceptor/error-indicator.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,11 +46,13 @@ import { UnauthGuard } from './route-guards/unauth.guard';
     LoadingIndicatorModule,
     TagCloudModule,
     ChartsModule,
+    AlertHandlingModule,
   ],
   providers: [
     UnauthGuard,
     AuthGuard,
     ConnectionService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
