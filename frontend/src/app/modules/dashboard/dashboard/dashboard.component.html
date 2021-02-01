@@ -1,4 +1,4 @@
-<h3>Get 100 instant twits</h3>
+<h3>Get instant tweets</h3>
 <form [formGroup]="searchForm" (ngSubmit)="submit()">
 
   <label>Key: <input placeholder="key" type="text" formControlName="key" class="form-control"
@@ -10,7 +10,7 @@
   </label>
   <label>How many twets you would like to see? <small>(default 100):</small> <input type="number"
       formControlName="tweetCount" class="form-control"> </label>
-  <button type="submit">Get Twits</button>
+  <button type="submit">Get Tweets</button>
 </form>
 
 <app-result *ngIf="(result$ | async) as result " [result]="result"></app-result>
