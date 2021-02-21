@@ -16,16 +16,16 @@
   <div class="twit-header">
     <span class="twit-text"> Full text of all tweets <small>You can click on links to visit their explanations</small>
     </span>
-    <span class="twit-sentiment">Sentiment Anaysis</span>
+    <span class="twit-sentiment">Sentiment Analysis</span>
   </div>
   <div class="twit" *ngFor="let twit of result.data.cooked; let i = index">
     <span class="twit-text" [innerHTML]="twit.text"></span>
-    <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound >= 0.05">Negative :(<br>
+    <span class="twit-sentiment neg" width="100" *ngIf="twit.sentiment.compound <= -0.05">Negative :(<br>
       <small>compound : {{twit.sentiment.compound}}</small></span>
-    <span class="twit-sentiment pos" width="100"
-      *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Positive :) <br>
+    <span class="twit-sentiment pos" width="100" *ngIf="twit.sentiment.compound >= 0.05">Positive :) <br>
       <small>compound : {{twit.sentiment.compound}}</small></span>
-    <span class="twit-sentiment neu" width="100" *ngIf="twit.sentiment.compound <= -0.05">Neutral :| <br>
+    <span class="twit-sentiment neu" width="100"
+      *ngIf="twit.sentiment.compound > -0.05  && twit.sentiment.compound < 0.05">Neutral :| <br>
       <small>compound : {{twit.sentiment.compound}}</small></span>
   </div>
 </div>
